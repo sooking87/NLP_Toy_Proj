@@ -1,0 +1,7 @@
+Client Id
+Qs42Emb9H_LKyBzCZkZvUmX06kKVso8ACVoFhuTbxGygipq9YDDZ8UrAl8hrPpUe
+
+Client Secret
+
+Client Access Token
+DuO42xKa4Ts70InLe_Y_strEpeL_CxowzCtXyAMaiNlbAOVOTfFpt2q5FdP4lo_U
