@@ -67,18 +67,18 @@ billboard100_2_df.drop_duplicates(subset='song', inplace=True)
 billboard100_2_df.reset_index(drop=True)
 
 # 노래 가사 불러오기
-lyrics2 = billboard100_1_df.apply(lambda row: get_lyrics(
+lyrics2 = billboard100_2_df.apply(lambda row: get_lyrics(
     row['song'], row['artist']), axis=1)
-billboard100_1_df['lyrics'] = lyrics2
-print(billboard100_1_df.shape)
+billboard100_2_df['lyrics'] = lyrics2
+print(billboard100_2_df.shape)
 # not found 제거
-billboard100_1_df = billboard100_1_df.drop(
-    billboard100_1_df[billboard100_1_df['lyrics'] == 'not found'].index)
-# print("after del not found: ", billboard100_1_df.shape)
-# print(billboard100_1_df.index.tolist())
+billboard100_2_df = billboard100_2_df.drop(
+    billboard100_2_df[billboard100_2_df['lyrics'] == 'not found'].index)
+# print("after del not found: ", billboard100_2_df.shape)
+# print(billboard100_2_df.index.tolist())
 
 # Use get_lyric_sentiment to get sentiment score for all the song lyrics
-sentiment2 = billboard100_1_df.apply(
+sentiment2 = billboard100_2_df.apply(
     lambda row: get_lyric_sentiment(row['lyrics']), axis=1)
 
 # print(sentiment2)
@@ -86,11 +86,11 @@ sentiment2 = billboard100_1_df.apply(
 # print(type(sentiment2))  # Series
 # print(sentiment2.values[0])  # -> sentiment2 score, type=dict
 
-for i in billboard100_1_df.index.tolist():
+for i in billboard100_2_df.index.tolist():
     print("\n%d번 째 인덱스" % i)
-    billboard100_1_df.loc[i, 'neg_sentiment'] = sentiment2[i]['neg']
-    billboard100_1_df.loc[i, 'neu_sentiment'] = sentiment2[i]['neu']
-    billboard100_1_df.loc[i, 'pos_sentiment'] = sentiment2[i]['pos']
-    billboard100_1_df.loc[i, 'com_sentiment'] = sentiment2[i]['compound']
+    billboard100_2_df.loc[i, 'neg_sentiment'] = sentiment2[i]['neg']
+    billboard100_2_df.loc[i, 'neu_sentiment'] = sentiment2[i]['neu']
+    billboard100_2_df.loc[i, 'pos_sentiment'] = sentiment2[i]['pos']
+    billboard100_2_df.loc[i, 'com_sentiment'] = sentiment2[i]['compound']
 
-billboard100_1_df.to_csv("billboard_sample2.csv", index=False)
+billboard100_2_df.to_csv("billboard_sample2.csv", index=False)
