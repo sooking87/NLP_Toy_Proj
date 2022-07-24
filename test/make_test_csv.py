@@ -2,12 +2,16 @@ import csv
 import os
 import pandas as pd
 
-temp_df = pd.read_csv('charts.csv', index_col=False)
+temp_df = pd.read_csv('./charts.csv', index_col=False)
 temp_df.drop_duplicates(subset='song', inplace=True)
 temp_df.reset_index()
-testTemp_df = temp_df.head(20)
+testTemp1_df = temp_df.iloc[0:10, 0:]
+testTemp2_df = temp_df.iloc[10:20, 0:]
+# print(testTemp1_df)
+# print(testTemp2_df)
 # print(testTemp_df.keys())
 
 # print(list(testTemp_df.keys()))
 
-testTemp_df.to_csv("testData.csv", index=False)
+testTemp1_df.to_csv("billboard_sample1.csv", index=False)
+testTemp2_df.to_csv("billboard_sample2.csv", index=False)
