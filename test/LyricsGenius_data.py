@@ -11,10 +11,8 @@
 # pip install lyricsgenius
 # pip install textblob
 # python -m textblob.download_corpora
-# pip install gensim -> ? (default=numpy && spicy)
-# pip install gensim==3.8.3 -> ? error
+# pip3 install gensim==3.6.0
 # Function to return lyrics of each song using Genius API
-
 
 from textblob import TextBlob
 from gensim.summarization import keywords
@@ -81,7 +79,7 @@ genius = lyricsgenius.Genius(
 hot100_df = pd.read_csv('Hot Stuff.csv')
 # remove duplicate occurrences of songs
 hot100_df.drop_duplicates(subset='SongID', inplace=True)
-hot100_df.reset_index()
+hot100_df.reset_index(drop=True)
 
 
 # Use get_lyrics funcion to get lyrics for every song in dataset

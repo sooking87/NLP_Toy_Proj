@@ -5,23 +5,10 @@ import spacy
 from spacy.lang.en import English
 from nltk.corpus import stopwords
 import nltk
-#from gensim.summarization import keywords
-
-# import packages
-nltk.download('stopwords')
-stopwords = set(stopwords.words('english'))
-nlp = English()
-nlp.max_length = 10000000
+# from gensim.summarization import keywords
 
 genius = lyricsgenius.Genius(
     "DuO42xKa4Ts70InLe_Y_strEpeL_CxowzCtXyAMaiNlbAOVOTfFpt2q5FdP4lo_U")
-
-
-def get_lyrics(title, artist):
-    try:
-        return genius.search_song(title, artist).lyrics
-    except:
-        return 'not found'
 
 
 # song = genius.search_artist("BTS", max_songs=3, sort="title")
@@ -32,4 +19,14 @@ lyrics = genius.search_song("Dynamite", "BTS").lyrics
 
 analysis = TextBlob(lyrics)
 sentiment = analysis.sentiment.polarity
-print(sentiment)
+# print(type(sentiment))
+print("%s, %s, sentiment: %.3f" % ("BTS", "Dynamite", sentiment))
+
+
+lyrics2 = genius.search_song("Fall For You", "Secondhand Serenade").lyrics
+# print(lyrics2)
+
+analysis2 = TextBlob(lyrics2)
+sentiment2 = analysis2.sentiment.polarity
+print("%s, %s, sentiment: %.3f" %
+      ("Secondhand Serenade", "Fall For You", sentiment2))

@@ -2,7 +2,6 @@ import csv
 import os
 
 os.chdir(r"C:\STUDY\방학(3)\NLP_Toy_Proj")
-
 header = [['year', 'artist', 'title', 'lyrics', 'sentiment'],
           [1, 2, 3, 4, 5]]
 
