@@ -2,6 +2,7 @@
 """
 pip install lyricsgenius
 pip install vaderSentiment
+pip install pandas
 """
 import lyricsgenius
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
@@ -29,11 +30,11 @@ genius = lyricsgenius.Genius(
 sid_obj = SentimentIntensityAnalyzer()
 
 # temp: testData.csv, actual: Hot Stuff.csv
-hot100_df = pd.read_csv('testData.csv')
+hot100_df = pd.read_csv('Hot Stuff.csv')
 # 노래 중복 제거
-hot100_df.drop_duplicates(subset='Song', inplace=True)  # actual: SongID로 바꾸기
+hot100_df.drop_duplicates(subset='SongID', inplace=True)  # actual: SongID로 바꾸기
 hot100_df.reset_index(drop=True)
-# print(hot100_df)
+print(hot100_df.shape)
 
 # 노래 가사 불러오기
 lyrics = hot100_df.apply(lambda row: get_lyrics(
