@@ -23,7 +23,6 @@ genius = lyricsgenius.Genius(
     "DuO42xKa4Ts70InLe_Y_strEpeL_CxowzCtXyAMaiNlbAOVOTfFpt2q5FdP4lo_U")
 sid_obj = SentimentIntensityAnalyzer()
 
-<<<<<<< HEAD:billboard/billboard_lyricsData.py
 # sample: testData.csv / actual: charts.csv
 billboard100_df = pd.read_csv('./billboard/testData.csv')
 billboard100_df = billboard100_df.drop(
@@ -32,14 +31,6 @@ billboard100_df.drop_duplicates(subset='song', inplace=True)
 billboard100_df.reset_index(drop=True)
 print(billboard100_df.tail())
 print(len(billboard100_df.index.tolist()))
-=======
-"""sample: billboard_sample1.csv / actual: charts.csv"""
-billboard100_1_df = pd.read_csv('billboard_sample1.csv')
-billboard100_1_df = billboard100_1_df.drop(
-    ['rank', 'last-week', 'peak-rank', 'weeks-on-board'], axis=1)
-billboard100_1_df.drop_duplicates(subset='song', inplace=True)
-billboard100_1_df.reset_index(drop=True)
->>>>>>> 283a38a190708e1b9022cc6f571d7d453dbe3bc2:billboard_lyricsData.py
 
 # 노래 가사 불러오기
 lyics1 = billboard100_1_df.apply(lambda row: get_lyrics(
