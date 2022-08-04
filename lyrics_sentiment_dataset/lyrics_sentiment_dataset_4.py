@@ -37,21 +37,21 @@ lyrics_sentiment_dataset = lyrics_sentiment_dataset.drop(
 
 lyrics_sentiment_dataset.drop_duplicates(subset='track_name', inplace=True)
 lyrics_sentiment_dataset.reset_index(drop=True)  
-lyrics_sentiment_dataset_3 = lyrics_sentiment_dataset.iloc[18921:23650, 0:]
+lyrics_sentiment_dataset_4 = lyrics_sentiment_dataset.iloc[14191:18920, 0:]
 
 # 노래 가사 불러오기
-lyics1 = lyrics_sentiment_dataset_3.apply(lambda row: get_lyrics(
+lyics1 = lyrics_sentiment_dataset_4.apply(lambda row: get_lyrics(
     row['track_name'], row['artist_name']), axis=1)
-lyrics_sentiment_dataset_3['lyrics'] = lyics1
-print(lyrics_sentiment_dataset_3.shape)
+lyrics_sentiment_dataset_4['lyrics'] = lyics1
+print(lyrics_sentiment_dataset_4.shape)
 # not found 제거
-lyrics_sentiment_dataset_3 = lyrics_sentiment_dataset_3.drop(
-    lyrics_sentiment_dataset_3[lyrics_sentiment_dataset_3['lyrics'] == 'not found'].index)
-# print("after del not found: ", lyrics_sentiment_dataset_3.shape)
-# print(lyrics_sentiment_dataset_3.index.tolist())
+lyrics_sentiment_dataset_4 = lyrics_sentiment_dataset_4.drop(
+    lyrics_sentiment_dataset_4[lyrics_sentiment_dataset_4['lyrics'] == 'not found'].index)
+# print("after del not found: ", lyrics_sentiment_dataset_4.shape)
+# print(lyrics_sentiment_dataset_4.index.tolist())
 
 # Use get_lyric_sentiment to get sentiment score for all the song lyrics
-sentiment = lyrics_sentiment_dataset_3.apply(
+sentiment = lyrics_sentiment_dataset_4.apply(
     lambda row: get_lyric_sentiment(row['lyrics']), axis=1)
 
 # print(sentiment)
@@ -59,11 +59,11 @@ sentiment = lyrics_sentiment_dataset_3.apply(
 # print(type(sentiment))  # Series
 # print(sentiment.values[0])  # -> sentiment score, type=dict
 
-for i in lyrics_sentiment_dataset_3.index.tolist():
+for i in lyrics_sentiment_dataset_4.index.tolist():
     # print("\n%d번 째 인덱스" % i)
-    lyrics_sentiment_dataset_3.loc[i, 'neg_sentiment'] = sentiment[i]['neg']
-    lyrics_sentiment_dataset_3.loc[i, 'neu_sentiment'] = sentiment[i]['neu']
-    lyrics_sentiment_dataset_3.loc[i, 'pos_sentiment'] = sentiment[i]['pos']
-    lyrics_sentiment_dataset_3.loc[i, 'com_sentiment'] = sentiment[i]['compound']
+    lyrics_sentiment_dataset_4.loc[i, 'neg_sentiment'] = sentiment[i]['neg']
+    lyrics_sentiment_dataset_4.loc[i, 'neu_sentiment'] = sentiment[i]['neu']
+    lyrics_sentiment_dataset_4.loc[i, 'pos_sentiment'] = sentiment[i]['pos']
+    lyrics_sentiment_dataset_4.loc[i, 'com_sentiment'] = sentiment[i]['compound']
 
-lyrics_sentiment_dataset_3.to_csv("lyrics_sentiment_dataset_5.csv", index=False)
+lyrics_sentiment_dataset_4.to_csv("lyrics_sentiment_dataset_4.csv", index=False)
