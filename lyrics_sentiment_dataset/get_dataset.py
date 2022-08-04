@@ -22,7 +22,26 @@ for i in filtered_df.index.tolist():
     length = len(filtered_df.loc[i, 'lyrics'])
     filtered_df.loc[i, 'lyrics_len'] = length
 
-# 
+# 우선 가사 길이가 긴 경우를 뽑고, 해당 가사가 맞는지 아닌지 확인
 filtered_df.sort_values('lyrics_len', ascending=False, inplace=True)
 print(filtered_df.head(30))
 
+# 
+# lyrics_len 내림차순 정렬
+filtered_df.sort_values('lyrics_len', ascending=False, inplace=True)
+
+# 어디까지는 "무조건" 지워야하는지 확인 -> filtered_df 기준 인덱스 90까지 지워야됨
+delete = filtered_df.iloc[0:91, 0:]
+print(delete)
+# 해당 가수의 가사 찾기
+li = filtered_df[(filtered_df['artist_name'] == 'the brian jonestown massacre') & (filtered_df['track_name'] == 'fucker')]['lyrics'].tolist()
+print(li)
+
+fin_filtered_df = filtered_df.iloc[91:, 0:]
+
+# 제일 마지막은 들어본 결과 가사가 없음 => del
+short_lyrics = fin_filtered_df[(fin_filtered_df['artist_name'] == 'blues traveler') & (fin_filtered_df['track_name'] == 'the good, the bad and the ugly')].index
+
+fin_filtered_df = fin_filtered_df.drop(short_lyrics)
+
+fin_filtered_df.to_csv("lyrics_sentiment_dataset_3.csv")

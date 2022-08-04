@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('./lyrics_sentiment_dataset/lyrics_sentiment_dataset_4.csv')
+df = pd.read_csv('./lyrics_sentiment_dataset/lyrics_sentiment_dataset_3.csv')
 
 # df.shape : (2394, 8)
 # filtered_df.shape : (2265, 8)
@@ -13,9 +13,8 @@ df = pd.read_csv('./lyrics_sentiment_dataset/lyrics_sentiment_dataset_4.csv')
 # filtered_df에서 내림차순 정렬 기준 앞에서부터 30개를 버리면 lyrics 평균길이 : 2508
 # filtered_df에서 내림차순 정렬 기준 앞에서부터 50개를 버리면 lyrics 평균길이 : 1908
 
-print(df.head())
-print(df.shape)
 
-
-
+print(df.keys())
+df.drop(['Unnamed: 0.1', 'Unnamed: 0'], axis=1, inplace=True)
+df.to_csv("lyrics_sentiment_dataset_3.csv", index=False)
 
