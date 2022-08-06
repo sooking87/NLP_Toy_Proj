@@ -14,7 +14,8 @@ df = pd.read_csv('./lyrics_sentiment_dataset/lyrics_sentiment_dataset_3.csv')
 # filtered_df에서 내림차순 정렬 기준 앞에서부터 50개를 버리면 lyrics 평균길이 : 1908
 
 # 하나라도 0점이면 out
-filtered_df = df[(df['neg_sentiment'] != 0.000) & (df['neu_sentiment'] != 0.000) & (df['pos_sentiment'] != 0.000) & (df['com_sentiment'] != 0.000)]
+filtered_df = df[(df['neg_sentiment'] != 0.000) & (df['neu_sentiment'] != 0.000) & (
+    df['pos_sentiment'] != 0.000) & (df['com_sentiment'] != 0.000)]
 
 # lyrics 길이만 조작
 get_len = []
@@ -26,7 +27,7 @@ for i in filtered_df.index.tolist():
 filtered_df.sort_values('lyrics_len', ascending=False, inplace=True)
 print(filtered_df.head(30))
 
-# 
+#
 # lyrics_len 내림차순 정렬
 filtered_df.sort_values('lyrics_len', ascending=False, inplace=True)
 
@@ -34,14 +35,15 @@ filtered_df.sort_values('lyrics_len', ascending=False, inplace=True)
 delete = filtered_df.iloc[0:91, 0:]
 print(delete)
 # 해당 가수의 가사 찾기
-li = filtered_df[(filtered_df['artist_name'] == 'the brian jonestown massacre') & (filtered_df['track_name'] == 'fucker')]['lyrics'].tolist()
+li = filtered_df[(filtered_df['artist_name'] == 'the brian jonestown massacre') & (
+    filtered_df['track_name'] == 'fucker')]['lyrics'].tolist()
 print(li)
 
 fin_filtered_df = filtered_df.iloc[91:, 0:]
 
 # 제일 마지막은 들어본 결과 가사가 없음 => del
-short_lyrics = fin_filtered_df[(fin_filtered_df['artist_name'] == 'blues traveler') & (fin_filtered_df['track_name'] == 'the good, the bad and the ugly')].index
+short_lyrics = fin_filtered_df[(fin_filtered_df['artist_name'] == 'blues traveler') & (
+    fin_filtered_df['track_name'] == 'the good, the bad and the ugly')].index
 
 fin_filtered_df = fin_filtered_df.drop(short_lyrics)
-
 fin_filtered_df.to_csv("lyrics_sentiment_dataset_3.csv")
