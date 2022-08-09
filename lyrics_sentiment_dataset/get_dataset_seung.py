@@ -17,4 +17,3 @@ df = pd.read_csv('./lyrics_sentiment_dataset/lyrics_sentiment_dataset_3.csv')
 print(df.keys())
 df.drop(['Unnamed: 0.1', 'Unnamed: 0'], axis=1, inplace=True)
 df.to_csv("lyrics_sentiment_dataset_3.csv", index=False)
-
