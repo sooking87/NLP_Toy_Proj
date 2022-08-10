@@ -26,6 +26,8 @@ def tokenize(str_lyrics):
 
     return init_words
 
+# sentence = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]','',sentence)
+
 
 def remove_not_alpa(words_list):
     for word in words_list:
