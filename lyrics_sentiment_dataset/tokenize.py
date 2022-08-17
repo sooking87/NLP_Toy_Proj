@@ -1,5 +1,6 @@
 import pandas as pd
-from nltk import sent_tokenize, word_tokenize
+from nltk import sent_tokenize
+import tensorflow.keras as tf
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import nltk
@@ -12,21 +13,29 @@ add_stopwords = ["[", "]", "(", ")", ",", "lyrics",
 new_stopwords.extend(add_stopwords)
 nltk.download('omw-1.4')
 nltk.download('wordnet')
+text_to_word_sequence = tf.keras.preprocessing.text.text_to_word_sequence
+
+# sentence = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]','',sentence)
+# import re
+# regex = "\[[^\]]*\]|\s-\s.*"
+# for i in range(len(df["lyrics"])):
+#     df["lyrics"][i] = re.sub(regex,'',df["lyrics"][i])
 
 
 def tokenize(str_lyrics):
+    regex = "\[[^\]]*\]|\s-\s.*"
     split_lyrics = " ".join(str_lyrics.splitlines())
+    re.sub(regex, ' ', split_lyrics)
+    print("tokenize", split_lyrics)
     sentences = sent_tokenize(split_lyrics)
     init_words = []
     for sentence in sentences:
-        word_tokens = word_tokenize(sentence)
+        word_tokens = text_to_word_sequence(sentence)
         for word in word_tokens:
             word = word.lower()
             init_words.append(word)
 
     return init_words
-
-# sentence = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]','',sentence)
 
 
 def remove_not_alpa(words_list):
@@ -65,29 +74,30 @@ sid_obj = SentimentIntensityAnalyzer()
 df = pd.read_csv('./lyrics_sentiment_dataset/lyrics_sentiment_dataset_3.csv')
 
 
-for i in df.index.tolist():
+# for i in df.index.tolist():
+for i in range(10):
     lyrics = df.loc[i, 'lyrics']
     # tokenize
     init_words_list = tokenize(lyrics)
-    init_words_list = list(set(init_words_list))
+    init_words_list = list(init_words_list)
     # remove not alpha
     alpha_words_list = remove_not_alpa(init_words_list)
     # remove stopword
     filtered_word_list = remove_stopwords(alpha_words_list)
     # lemmatizer
     lemmatized_list = lemmatizer(filtered_word_list)
-    lemmatized_list = list(set(lemmatized_list))
+    lemmatized_list = list(lemmatized_list)
     final_list = remove_not_alpa(lemmatized_list)
     final_str = " ".join(final_list)
 
-    sentiment = get_lyric_sentiment(final_str)
+    # sentiment = get_lyric_sentiment(final_str)
     # print("\n%d번 째 인덱스" % i)
-    df.loc[i, 'neg_sentiment'] = sentiment['neg']
-    df.loc[i, 'neu_sentiment'] = sentiment['neu']
-    df.loc[i, 'pos_sentiment'] = sentiment['pos']
-    df.loc[i,
-           'com_sentiment'] = sentiment['compound']
+    # df.loc[i, 'neg_sentiment'] = sentiment['neg']
+    # df.loc[i, 'neu_sentiment'] = sentiment['neu']
+    # df.loc[i, 'pos_sentiment'] = sentiment['pos']
+    # df.loc[i,
+    #        'com_sentiment'] = sentiment['compound']
 
     df.loc[i, 'lyrics'] = final_str
 
-df.to_csv("get_sent_again_lyrics_sentiment_dataset_3_tokenized.csv", index=False)
+df.to_csv("lyrics_sentiment_dataset_tokenized_temp.csv", index=False)
