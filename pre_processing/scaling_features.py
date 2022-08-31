@@ -1,34 +1,59 @@
 
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-import nltk
-from nltk.stem import WordNetLemmatizer
-from sklearn import preprocessing
-from sklearn.model_selection import train_test_split
 import pandas as pd
-from gensim.models import Word2Vec
-from gensim.models import KeyedVectors
+import operator
 
 
-def lemmatizer(tokenzied_list):
-    lemmatized_list = []
-    for word in tokenzied_list:
-        word = lemma.lemmatize(word)
-        lemmatized_list.append(word)
-    return lemmatized_list
+def to_list(str):
+    split_str = str.split(" ")
+    return split_str
+
+# 새로운 불용어와 기존 불용어 필터링하기
 
 
-def get_lyric_sentiment(lyrics):
-    sentiment = sid_obj.polarity_scores(lyrics)
-    return sentiment
+def filter_stopwords(tokenized_words, stopwords):
+    tokenized_filtered = []
+
+    for word in tokenized_words:
+        if word not in stopwords:
+            tokenized_filtered.append(word)
+
+    return tokenized_filtered
 
 
-lemma = WordNetLemmatizer()
-sid_obj = SentimentIntensityAnalyzer()
+def word_count(tokenized_data):
+    word_counter = {}
+
+    for i in tokenized_data:
+        if i in word_counter.keys():
+            word_counter[i] += 1
+        else:
+            word_counter[i] = 1
+
+    # 많이 나온 순서대로 정렬
+
+    sorted_dict = dict(sorted(word_counter.items(),
+                              key=operator.itemgetter(1), reverse=True))
+
+    return sorted_dict
+
+# 가장 상위 20개의 단어 보기
 
 
-df_prev = pd.read_csv(
-    "./pre_processing/billboard_dataset.csv")
+def top_30(tokenized_dict):
+    top_30_words = list(tokenized_dict.items())[:30]
+    return top_30_words
 
-model = Word2Vec(df_prev.loc[0:5, "lyrics"],
-                 window=5, min_count=5)
-print(model)
+
+df = pd.read_csv(
+    "./pre_processing/renew_dataset_final.csv")
+
+add_stopwords = ['ill', 'youll', 'well', 'till', 'shes', 'hes', 'shed', 'hed']
+for i in range(10):
+    # transform
+    tokenized_list = to_list(df.loc[i, 'lyrics'])
+    tokenized_filtered = filter_stopwords(tokenized_list, add_stopwords)
+    count_dict = word_count(tokenized_filtered)
+    top_30_list = top_30(count_dict)
+    print(top_30_list)
+
+    print("\n")

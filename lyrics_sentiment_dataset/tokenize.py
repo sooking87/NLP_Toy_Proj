@@ -74,8 +74,8 @@ sid_obj = SentimentIntensityAnalyzer()
 df = pd.read_csv('./lyrics_sentiment_dataset/lyrics_sentiment_dataset_3.csv')
 
 
-# for i in df.index.tolist():
-for i in range(10):
+for i in df.index.tolist():
+    # for i in range(10):
     lyrics = df.loc[i, 'lyrics']
     # tokenize
     init_words_list = tokenize(lyrics)
